@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    {{ person.username }}
+    {% if user == person %}
+        {{ user.like_movies }}
+        <a href="{% url 'account:update' %}" class="btn btn-info">회원정보 수정</a>
+        <a href="{% url 'account:password' %}" class="btn btn-info">비밀번호 변경</a>
+    {% endif %}
+
+{% endblock %}
