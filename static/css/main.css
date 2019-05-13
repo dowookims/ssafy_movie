@@ -1,3 +1,13 @@
 h1 {
   color: red;
 }
+
+.nav-bar {
+  background-color: rgba(18, 18, 18, 0.9); !important; 
+  color: white !important; 
+}
+
+.nav-bar a, .nav-bar a:hover {
+  text-decoration: none;
+  color: white;
+}
