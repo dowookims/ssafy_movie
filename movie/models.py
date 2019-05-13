@@ -10,4 +10,3 @@ class Movie(models.Model):
     userRating = models.FloatField()
     subtitle = models.CharField(max_length=200)
     link = models.CharField(max_length=300)
-
