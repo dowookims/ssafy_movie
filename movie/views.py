@@ -1,5 +1,8 @@
 from django.shortcuts import render
-
+from . models import Movie
 # Create your views here.
 def index(request):
-    return render(request, 'movie/index.html')
+    movies = Movie.objects.all()[:10]
+    return render(request, 'movie/index.html', {
+        'movies': movies,
+    })

@@ -22,5 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('account.urls')),
     path('movies/', include('movie.urls')),
-    path('', views.index, name='root')
+    path('', views.index, name='root'),
+    path('api/v1/', include('api.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
