@@ -1,3 +1,9 @@
+body {
+  background-color: #181818;
+  color: #E9E9E9;
+  font-family: 'Do Hyeon', sans-serif;
+}
+
 h1 {
   color: red; }
 
