@@ -37,3 +37,7 @@ class Score(models.Model):
     star = IntegerRangeField(range(1, 10))
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
+
+
+class Genre(models.Model):
+    name = models.CharField(max_length=100)
