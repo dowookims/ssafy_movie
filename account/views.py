@@ -12,7 +12,7 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             auth_login(request, user)
-            return render('accounts:detail')
+            return redirect('movie:index')
     else:
         form = CustomUserCreationForm()
         return render(request, 'account/signup.html', {'form': form})
@@ -23,10 +23,10 @@ def login(request):
         form = AuthenticationForm(request, request.POST)
         if form.is_valid():
             auth_login(request, form.get_user())
-            return redirect(request.GET.get('next') or 'account:detail')
+            return redirect(request.GET.get('next') or 'movie:index')
     else:
         form = AuthenticationForm()
-        return render(request, "account/login.html", {'form': form})
+        return render(request, 'account/login.html', {'form': form})
 
 
 def logout(request):
