@@ -13,16 +13,24 @@ class IntegerRangeField(models.IntegerField):
         return super(IntegerRangeField, self).formfield(**defaults)
 
 
+class Genre(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
 class Movie(models.Model):
     title = models.CharField(max_length=100)
     image = models.CharField(max_length=300)
-    pubDate = models.IntegerField()
-    director = models.CharField(max_length=200)
-    actor = models.CharField(max_length=200)
+    pubDate = models.CharField(max_length=100)
     userRating = models.FloatField()
-    subtitle = models.CharField(max_length=200)
-    link = models.CharField(max_length=300)
+    genres = models.ManyToManyField(Genre, related_name="movie_genres")
+    backdrop = models.CharField(max_length=300)
+    description = models.TextField()
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="like_movies", blank=True)
+
+    def __str__(self):
+        return self.title
 
 
 class Comment(models.Model):
@@ -38,6 +46,3 @@ class Score(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
 
-
-class Genre(models.Model):
-    name = models.CharField(max_length=100)
