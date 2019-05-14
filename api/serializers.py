@@ -14,3 +14,9 @@ class MovieSerializer(serializers.ModelSerializer):
     class Meta:
         model = Movie
         fields = "__all__"
+
+
+# TODO: make Comment serializer
+
+# TODO: make Score serializer
+

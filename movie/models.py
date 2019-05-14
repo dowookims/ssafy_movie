@@ -19,6 +19,7 @@ class Genre(models.Model):
     def __str__(self):
         return self.name
 
+
 class Movie(models.Model):
     title = models.CharField(max_length=100)
     image = models.CharField(max_length=300)
