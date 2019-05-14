@@ -16,6 +16,16 @@ body {
   top: 300px;
 }
 
+.arrow {
+  font-size :40px;
+  display: float;
+  z-index: 10;
+}
+
+.left-arrow {
+
+}
+
 .login-text {
   font-size: 2rem;
   text-align: center;
@@ -64,6 +74,7 @@ h1 { color: red; }
   background-color: green;
   height: 12rem;
   flex: 0 0 19.7%;
+  max-width: 353px !important;
   text-align: center;
   margin: 0 6px;
   transition: transform 400ms ease 200ms;
@@ -99,6 +110,7 @@ h1 { color: red; }
   color: white;
   font-size: 1.3rem;
   margin-left: 1rem;
+  margin-right: -4px;
   padding: 0.4rem 0.8rem;
 }
 .movie-sub-title {
@@ -127,9 +139,17 @@ h1 { color: red; }
   color: #9A9A9A;
   transform : rotateX(90deg);
 }
+
+.movie-detail-title {
+  
+}
+
 .detail-description {
   font-size: 1.5rem;
+  max-height: 400px;
+  overflow-y: hidden;
   text-overflow: ellipsis;
+  letter-spacing: 1.2px;
 }
 .detail {
   font-size: 1.3rem;
@@ -140,4 +160,10 @@ h1 { color: red; }
 
 .detail-subtext {
   margin: 0 4px;
+}
+
+.movie-detail-pics {
+  width: auto;
+  height: auto;
+  max-height: 500px;
 }

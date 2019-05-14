@@ -3,8 +3,9 @@
 {% block body %}
 <div id="app">
   <h1>Hello World!</h1>
-  <div class="movie-container">
-    <div class="items d-flex align-items-end" v-for="movie in movies" :style="{'background': 'url('+movie.backdrop+')'}">
+  <i @click="prevPage"class="fas fa-chevron-left arrow left-arrow"></i>
+  <div :style="{'margin-left': page +'%'}"class="movie-container">
+    <div class="items d-flex align-items-end" v-for="movie in movies" :style="{'background': 'url(https://image.tmdb.org/t/p/w500'+movie.backdrop+')'}">
       
       <div class="item-bottom">
         <span class="movie-small-name">[[ movie.title ]]</span>
@@ -12,7 +13,8 @@
       </div>
     </div>
   </div>
-  <show-more :class=`show-more-see` v-show="show" :movie="showmovie"></show-more>
+  <i @click="nextPage"class="fas fa-chevron-right arrow right-arrow"></i>
+  <show-more :class=`show-more-see` v-show="show" :movie="showmovie" v-model="show" show="show"></show-more>
 </div>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
