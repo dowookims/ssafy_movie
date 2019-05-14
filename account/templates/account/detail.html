@@ -4,7 +4,7 @@
     {{ person.username }}
     {% if user == person %}
         {{ user.like_movies }}
-        <a href="{% url 'account:update' %}" class="btn btn-info">edit</a>
+        <a href="{% url 'account:update' %}" class="btn btn-info">수정</a>
         <a href="{% url 'account:password' %}" class="btn btn-info">change password</a>
     {% endif %}
 
