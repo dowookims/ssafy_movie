@@ -1,9 +1,15 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 {% block body %}
-    <form method="POST">
-        {% csrf_token %}
-        {% bootstrap_form form %}
-        <button class="btn btn-dark">login</button>
-    </form>
+    <div class="login-main container d-flex justify-content-center align-items-center">
+        <div class="login-box">
+        <p class="login-text">로그인</p>
+        <hr class="login-line mb-4"/>
+        <form method="POST">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <button class="btn btn-danger login-btn mt-3">login</button>
+        </form>
+        </div>
+    </div>
 {% endblock %}
