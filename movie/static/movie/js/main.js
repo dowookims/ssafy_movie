@@ -9,7 +9,7 @@ Vue.component('show-more', {
     }
   },
   template: `
-  <div class="show-more-see" :style="{'background': 'url('+movie.image+')'}">
+  <div class="show-more-see" :style="{'background': 'url('+movie.image+'), no-repeat linear-gradient(to right, rgba(0,0,0,0), rgba(0,0,0,1))'}">
     <div>
       <div class="row">
         <div class="col-3">
