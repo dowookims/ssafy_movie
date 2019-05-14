@@ -1,5 +1,5 @@
-from rest_framework import serializers
 from movie.models import Movie, Genre
+from rest_framework import serializers
 
 
 class GenreSerializer(serializers.ModelSerializer):
@@ -19,3 +19,4 @@ class MovieSerializer(serializers.ModelSerializer):
 # TODO: make Comment serializer
 
 # TODO: make Score serializer
+

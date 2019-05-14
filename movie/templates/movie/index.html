@@ -4,10 +4,11 @@
 <div id="app">
   <h1>Hello World!</h1>
   <div class="movie-container">
-    <div class="items" v-for="movie in movies">
-      <img :src="movie.backdrop" :alt="movie.title"/>
-      <div><span class="movie-small-name">[[ movie.title ]]</span>
-      <button class="btn btn-primary py-1 show-more" @click="showMore(movie)">더보기</button>
+    <div class="items d-flex align-items-end" v-for="movie in movies" :style="{'background': 'url('+movie.backdrop+')'}">
+      
+      <div class="item-bottom">
+        <span class="movie-small-name">[[ movie.title ]]</span>
+        <button class="btn btn-primary py-1 show-more" @click="showMore(movie)">더보기</button>
       </div>
     </div>
   </div>

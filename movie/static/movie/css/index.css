@@ -4,6 +4,7 @@ body {
   background-color: #181818;
   color: #E9E9E9;
   font-family: 'Do Hyeon', sans-serif;
+  overflow-x: hidden;
 }
 
 .login-main {
@@ -50,14 +51,13 @@ h1 { color: red; }
 
 .show-more {
   visibility: hidden;
-  position: static;
-  left:0;
-  bottom: 0;
-  margin-left: 2rem;
+  position: absolute;
+  left:120px;
+  top: 158px;
 }
 
 .movie-small-name {
- margin-left: -5rem; 
+  margin-left: 1rem;
 }
 
 .items {
@@ -65,7 +65,7 @@ h1 { color: red; }
   height: 12rem;
   flex: 0 0 19.7%;
   text-align: center;
-  margin: 0 2px;
+  margin: 0 6px;
   transition: transform 400ms ease 200ms;
 }
 
@@ -109,4 +109,35 @@ h1 { color: red; }
   color : #181818;
   font-size: 1.3rem;
   padding: 0.5rem 0.9rem;
+}
+
+.movie-main-title {
+  display: inline-block;
+  color: white;
+}
+
+.movie-close-btn {
+  text-align: right;
+  color: white;
+  font-size: 4rem;
+  cursor: pointer;
+}
+
+.movie-close-btn:active {
+  color: #9A9A9A;
+  transform : rotateX(90deg);
+}
+.detail-description {
+  font-size: 1.5rem;
+  text-overflow: ellipsis;
+}
+.detail {
+  font-size: 1.3rem;
+  color: rgba(255, 255, 255, 0.6);
+  overflow: hidden;
+  margin-right: 1rem;
+}
+
+.detail-subtext {
+  margin: 0 4px;
 }

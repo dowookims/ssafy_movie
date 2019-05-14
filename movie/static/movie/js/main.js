@@ -2,18 +2,44 @@ const API_URL = 'http://127.0.0.1:8000';
 
 Vue.component('show-more', {
   props:['movie'],
+  methods: {
+    handleClose: function(){
+      app.show = false;
+      console.log(app.show)
+    }
+  },
   template: `
-  <div class="show-more-see">
+  <div class="show-more-see" :style="{'background': 'url('+movie.image+')'}">
     <div>
-      <h1>{{movie.title}}</h1>
-      <div class="movie-sub-title">
-      <p><span class="sub-box-name">개봉년도</span><span class="sub-box-value">{{movie.pubDate}}</span></p>
-      <p><span class="sub-box-name">평점</span><span class="sub-box-value">{{movie.userRating}}</span></p>
+      <div class="row">
+        <div class="col-3">
+          <h1 class="movie-main-title">{{movie.title}}</h1>
+        </div>
+        <div class="col-9 d-flex justify-content-end">
+          <span class="movie-close-btn mt-n3 mr-5" @click="!app.show">&times;</span>
+        </div>
       </div>
-      
+      <div class="movie-sub-title">
+        <p>
+          <span class="sub-box-name">개봉년도</span>
+          <span class="sub-box-value">{{movie.pubDate}}</span>
+        </p>
+        <p>
+          <span class="sub-box-name">평점</span>
+          <span class="sub-box-value">{{movie.userRating}}</span>
+        </p>
+      </div>
+      <div class="col-4 movie-detail-title">
+        <p class="detail-description">{{ movie.description }}</p>
+        <p>
+          <span class="detail detail-subtitle">개요</span>
+          <span class="detail detail-subtext" v-for="genre in movie.genres">{{ genre.name }}</span>
+        </p>
+      </div>
     </div>
   </div>
   `
+  
 })
 // main app
 const app = new Vue({
@@ -24,16 +50,20 @@ const app = new Vue({
     show: false,
     showmovie: {
       'title':'',
-      'actor':'',
       'pubDate':'',
-      'userRating':''
+      'userRating':'',
+      'genres':'',
+      'description':'',
+      'image':''
     },
   },
   delimiters: ['[[', ']]'],
-  created: async function(){
-    const res = await axios.get(`${API_URL}/movies/list/`)
-    res.data.forEach(movie => this.movies.push(movie))
-    console.log(res.data)
+  created: function(){
+    axios.get(`${API_URL}/api/v1/movies/?page=1`)
+      .then(res => res.data.results)
+      .then(data => {console.log(data);
+        data.forEach(movie => this.movies.push(movie))
+      })
   },
   methods: {
     showMore: function(movie){
@@ -46,18 +76,7 @@ const app = new Vue({
 
       if(this.show){
         this.showmovie=movie
-        const regActor = this.showmovie.actor.split('|')
-        console.log(regActor)
-        let actors = ''
-        regActor.forEach((name, idx) => 
-        { if(regActor.length-2  > idx) 
-          actors+=`${name}, `
-          else
-          actors+=name
-        })
-        this.showmovie.actor = actors
-      } else{
-        this.showmovie=''
+        
       }
     }
   }
