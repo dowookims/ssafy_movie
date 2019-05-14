@@ -9,8 +9,7 @@ def index(request):
     return render(request, 'movie/index.html')
 
 @api_view(['GET'])
-def list(request):
-    movies = Movie.objects.all()[:10]
-    print(movies)
-    serializer = MovieSerializer(movies, many=True)
+def movies(request):
+    movie_list = Movie.objects.all()[:10]
+    serializer = MovieSerializer(movie_list, many=True)
     return Response(serializer.data)

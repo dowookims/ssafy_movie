@@ -18,3 +18,9 @@ class MovieList(generics.ListAPIView):
     serializer_class = MovieSerializer
     pagination_class = CustomPagination
     queryset = Movie.objects.all()
+
+
+# TODO: make Comment Create, Read, Update, Delete
+# TODO: make Score Create, Read, Update, Delete
+# TODO: make Movie Recommend using tmdb API and user like
+# TODO: make Movie Like
