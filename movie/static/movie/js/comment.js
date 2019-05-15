@@ -1,48 +1,116 @@
-const API_URL = 'http://127.0.0.1:8000';
-// main app
-const app = new Vue({
-  el: '#comment',
-  data: {
-    message: "Hello World!!!!",
-    movies: [],
-    show: false,
-    showmovie: {
-      'title':'',
-      'actor':'',
-      'pubDate':'',
-      'userRating':''
+Vue.component('comments', {
+    data: function () {
+        return {
+            comments: [],
+            newComment: '',
+        }
     },
-  },
-  delimiters: ['[[', ']]'],
-  created: async function(){
-    const res = await axios.get(`${API_URL}/movies/list/`)
-    res.data.forEach(movie => this.movies.push(movie))
-    console.log(res.data)
-  },
-  methods: {
-    showMore: function(movie){
-      if(!this.show){
-        this.show = !this.show
-      }
-      else if(this.showmovie.title === movie.title){
-        this.show = !this.show
-      }
+    mounted: function () {
+        axios.get(`${API_URL}/api/v1/movies/671/comments/`)
+            .then(res => res.data)
+            .then(data => {
+                data.forEach(comment => this.comments.push(comment))
+            })
+    },
+    methods: {
+        createComment: function () {
+            function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = cookies[i].trim();
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
 
-      if(this.show){
-        this.showmovie=movie
-        const regActor = this.showmovie.actor.split('|')
-        console.log(regActor)
-        let actors = ''
-        regActor.forEach((name, idx) =>
-        { if(regActor.length-2  > idx)
-          actors+=`${name}, `
-          else
-          actors+=name
-        })
-        this.showmovie.actor = actors
-      } else{
-        this.showmovie=''
-      }
-    }
-  }
+            var csrftoken = getCookie('csrftoken');
+            axios.post(`${API_URL}/api/v1/movies/671/comments/`,
+                {content: this.newComment},
+                {
+                    headers: {
+                        'X-CSRFTOKEN': csrftoken,
+                    }
+                }
+            ).then(() => {
+                axios.get(`${API_URL}/api/v1/movies/671/comments/`)
+                    .then(res => res.data)
+                    .then(data => {
+                        this.comments.push(data[data.length - 1])
+                    });
+                this.newComment = '';
+            }).catch(function (error) {
+                alert("댓글 작성에 실패했습니다.")
+            });
+        }
+    },
+    template: `
+    <div id="comment">
+        <div v-for="comment in comments">{{comment.user.username}} {{comment.content}}</div>
+            {% if user.is_authenticated %}
+                <input type="text" class="form-control" v-model="newComment">
+                <button class="btn btn-dark" @click="createComment">enter</button>
+            {% endif %}
+        </div>
+    </div> 
+    `
 });
+// const app2 = new Vue({
+//     el: '#comment',
+//     data: {
+//         comments: [],
+//         newComment: '',
+//     },
+//     delimiters: ['[[', ']]'],
+//     created: function () {
+//         axios.get(`${API_URL}/api/v1/movies/671/comments/`)
+//             .then(res => res.data)
+//             .then(data => {
+//                 data.forEach(comment => this.comments.push(comment))
+//             })
+//     },
+//     methods: {
+//         createComment: function () {
+//             function getCookie(name) {
+//                 var cookieValue = null;
+//                 if (document.cookie && document.cookie !== '') {
+//                     var cookies = document.cookie.split(';');
+//                     for (var i = 0; i < cookies.length; i++) {
+//                         var cookie = cookies[i].trim();
+//                         // Does this cookie string begin with the name we want?
+//                         if (cookie.substring(0, name.length + 1) === (name + '=')) {
+//                             cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+//                             break;
+//                         }
+//                     }
+//                 }
+//                 return cookieValue;
+//             }
+//
+//             var csrftoken = getCookie('csrftoken');
+//             axios.post(`${API_URL}/api/v1/movies/671/comments/`,
+//                 {content: this.newComment},
+//                 {
+//                     headers: {
+//                         'X-CSRFTOKEN': csrftoken,
+//                     }
+//                 }
+//             ).then(() => {
+//                 axios.get(`${API_URL}/api/v1/movies/671/comments/`)
+//                     .then(res => res.data)
+//                     .then(data => {
+//                         this.comments.push(data[data.length - 1])
+//                     });
+//                 this.newComment = '';
+//             }).catch(function (error) {
+//                 alert("댓글 작성에 실패했습니다.")
+//             });
+//         }
+//     },
+// });

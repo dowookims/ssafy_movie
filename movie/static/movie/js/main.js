@@ -1,38 +1,41 @@
 const API_URL = 'http://127.0.0.1:8000';
-
+var API_KEY = '05559a3dcb74279f43087d2deb4ca13c';
 Vue.component('show-more', {
-  props:['movie', 'show'],
-  data: function(){
-    return {
-      basic: true,
-      detail: false,
-      recommend: false
-    }
-  },
-  methods: {
-    handleClose: function(){
-      console.log('start')
-      app.show = false;
-      show = false;
-      console.log(show)
+    props: ['movie', 'show'],
+    data: function () {
+        return {
+            basic: true,
+            detail: false,
+            recommend: false,
+        }
     },
-    activeBasic: function(){
-      this.basic = true
-      this.detail = false
-      this.recommend = false
+    methods: {
+        handleClose: function () {
+            console.log('start')
+            app.show = false;
+            show = false;
+            console.log(show)
+        },
+        activeBasic: function () {
+            this.basic = true
+            this.detail = false
+            this.recommend = false
+        },
+        activeDetail: function () {
+            this.basic = false
+            this.detail = true
+            this.recommend = false
+        },
+        activeRecommend: function (movie_id) {
+            this.basic = false
+            this.detail = false
+            this.recommend = true
+            axios.get(
+                `https://api.themoviedb.org/3/movie/${movie_id}/similar?api_key=${API_KEY}&language=ko-KR`
+            ).then(data => console.log(data))
+        },
     },
-    activeDetail: function(){
-      this.basic = false
-      this.detail = true
-      this.recommend = false
-    },
-    activeRecommend: function(){
-      this.basic = false
-      this.detail = false
-      this.recommend = true
-    }
-  },
-  template: `
+    template: `
   <div class="show-more-see mx-0">
     <div>
       <div class="row">
@@ -64,68 +67,70 @@ Vue.component('show-more', {
             <span @click="handleClose" class="movie-close-btn mt-n3 mr-5">x</span>
           </div>
         </div>
+        <comments v-show="detail"></comments>
       </div>
       <div class="row d-flex justify-content-center bottom-menu" v-show="show">
         <span @click="activeBasic" :class="{'menu-click': basic}">기본정보</span>
         <span @click="activeDetail" :class="{'menu-click': detail}">상세정보</span>
-        <span @click="activeRecommend" :class="{ 'menu-click': recommend }">비슷한 작품</span>
+        <span @click="activeRecommend(movie.id)" :class="{ 'menu-click': recommend }">비슷한 작품</span>
       </div>
     </div>
   </div>
+  
   `
-})
+});
 // main app
 const app = new Vue({
-  el: '#app',
-  data: {
-    message: "Hello World!!!!",
-    movies: [],
-    show: false,
-    showmovie: {
-      'title':'',
-      'pubDate':'',
-      'userRating':'',
-      'genres':'',
-      'description':'',
-      'image':''
+    el: '#app',
+    data: {
+        message: "Hello World!!!!",
+        movies: [],
+        show: false,
+        showmovie: {
+            'title': '',
+            'pubDate': '',
+            'userRating': '',
+            'genres': '',
+            'description': '',
+            'image': ''
+        },
+        page: 0
     },
-    page: 0
-  },
-  delimiters: ['[[', ']]'],
-  created: function(){
-    axios.get(`${API_URL}/api/v1/movies/?page=1`)
-      .then(res => res.data.results)
-      .then(data => {console.log(data);
-        data.forEach(movie => this.movies.push(movie))
-      })
-  },
-  methods: {
-    showMore: function(movie){
-      if(!this.show){
-        this.show = !this.show
-      }
-      else if(this.showmovie.title === movie.title){
-        this.show = !this.show
-      }
+    delimiters: ['[[', ']]'],
+    created: function () {
+        axios.get(`${API_URL}/api/v1/movies/?page=1`)
+            .then(res => res.data.results)
+            .then(data => {
+                console.log(data);
+                data.forEach(movie => this.movies.push(movie))
+            })
+    },
+    methods: {
+        showMore: function (movie) {
+            if (!this.show) {
+                this.show = !this.show
+            } else if (this.showmovie.title === movie.title) {
+                this.show = !this.show
+            }
 
-      if(this.show){
-        this.showmovie=movie
-        
-      }
-    },
-    prevPage: function(){
-      if (this.page==0){
-        this.page= -95
-      } else {
-        this.page += 95
-      }
-    },
-    nextPage: function(){
-      if (this.page== -95){
-        this.page =0
-      } else {
-        this.page -= 95
-      }
+            if (this.show) {
+                this.showmovie = movie
+
+            }
+        },
+        prevPage: function () {
+            if (this.page == 0) {
+                this.page = -95
+            } else {
+                this.page += 95
+            }
+        },
+        nextPage: function () {
+            if (this.page == -95) {
+                this.page = 0
+            } else {
+                this.page -= 95
+            }
+        }
     }
-  }
 });
