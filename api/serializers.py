@@ -35,5 +35,7 @@ class CommentCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = ['content']
+
+
 # TODO: make Score serializer
 

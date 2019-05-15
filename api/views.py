@@ -37,6 +37,12 @@ def comment(request, movie_id):
         serializer = CommentSerializer(comments, many=True)
         return Response(serializer.data)
 
+
+@api_view(['GET'])
+def login(request):
+    return Response({
+        'is_authenticated': request.user.is_authenticated
+    })
 # TODO: make Score Create, Read, Update, Delete
 # TODO: make Movie Recommend using tmdb API and user like
 # TODO: make Movie Like

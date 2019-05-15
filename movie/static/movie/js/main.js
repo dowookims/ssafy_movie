@@ -7,6 +7,7 @@ Vue.component('show-more', {
             basic: true,
             detail: false,
             recommend: false,
+            recommendMovies: []
         }
     },
     methods: {
@@ -24,13 +25,18 @@ Vue.component('show-more', {
             this.detail = true
             this.recommend = false
         },
-        activeRecommend: function (movie_id) {
+        activeRecommend: function(movie_id) {
             this.basic = false
             this.detail = false
             this.recommend = true
-            axios.get(
-                `https://api.themoviedb.org/3/movie/${movie_id}/similar?api_key=${API_KEY}&language=ko-KR`
-            ).then(data => console.log(data))
+            this.recommendMovie = []
+            axios.get(`https://api.themoviedb.org/3/movie/${movie_id}/similar?api_key=${API_KEY}&language=ko-KR`)
+            .then(res => {console.log(res.data.results); return res.data.results})
+            .then(data => {
+              data.forEach(movie => {
+                this.recommendMovies.push(movie)
+              })
+            })
         },
     },
     template: `
@@ -61,15 +67,15 @@ Vue.component('show-more', {
           <div class="img-div" :class="{'blur-image': !basic}" :style="{'background-image': 'url(https://image.tmdb.org/t/p/original'+movie.backdrop+')', 'background-size': 'cover',
           }">
           </div>
-          <div v-show="detail" class="detail-comment-box">
-            sdfasdfdsfhjkhjkhsdfhsk
-            <comments v-show="detail"></comments>  
-          </div>
+          <comments v-show="detail"></comments>
+          <recommends 
+          :rcmv="recommendMovies" v-show="recommend"
+          ></recommends>
           <div class="close-box">
             <span @click="handleClose" class="movie-close-btn mt-n3 mr-5">&times;</span>
           </div>
         </div>
-        
+
       </div>
       <div class="row d-flex justify-content-center bottom-menu" v-show="show">
         <span @click="activeBasic" :class="{'menu-click': basic}">기본정보</span>

@@ -277,3 +277,12 @@ h1 {
 .showing {
   margin-bottom: 830px;
 }
+
+.recommend-list {
+  position: relative;
+}
+
+.recommend-mv-list {
+  display: flex;
+  
+}
