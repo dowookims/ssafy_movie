@@ -5,6 +5,15 @@ body {
   color: #E9E9E9;
   font-family: 'Do Hyeon', sans-serif;
   overflow-x: hidden;
+  height: 94vh;
+}
+
+#app {
+  padding-top: 4rem;
+  height: 100%;
+  background-image: url('https://images6.alphacoders.com/979/979298.png');
+  background-size: cover;
+  opacity: 0.5;
 }
 
 .login-main {
@@ -20,10 +29,22 @@ body {
   font-size :40px;
   display: float;
   z-index: 10;
+  cursor: pointer;
 }
 
 .left-arrow {
+  margin-top: auto;
+  margin-bottom: auto;
+  top: 320px;
+  position: absolute;
+}
 
+.right-arrow {
+  margin-top: auto;
+  margin-bottom: auto;
+  top: 320px;
+  right: 0;
+  position: absolute;
 }
 
 .login-text {
@@ -38,32 +59,47 @@ body {
 .login-btn {
   width: 100%;
 }
-#app {
-  padding-top: 4rem;
-}
 
-h1 { color: red; }
+
+h1 { 
+  color: red;
+  opacity: 1;
+}
 
 .nav-bar {
   background-color: rgba(18, 18, 18, 0.9);
-  color: white; 
+  color: white;
 }
 
 .nav-bar a, .nav-bar a:hover {
   text-decoration: none;
-  color: white; }
+  color: white; 
+}
+
+#nav-title {
+  color: #FF0000;
+  font-size: 2.5rem;
+}
 
 .movie-container {
   margin-top: 5rem;
   display: flex;
   padding: 0 4rem;
+  opacity: 1;
 }
 
 .show-more {
   visibility: hidden;
   position: absolute;
-  left:120px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 40px;
   top: 158px;
+  left: 140px;
+  color: rgba(DE,DE,DE,1);
+}
+.show-more:hover {
+  color: #FF0000;
 }
 
 .movie-small-name {
@@ -93,6 +129,10 @@ h1 { color: red; }
 
 .items:hover {
   transform: scale(1.38) !important;
+}
+
+.movie-spec-info {
+  background-color: #080808;
 }
 
 .show-more-see {
@@ -135,13 +175,15 @@ h1 { color: red; }
   cursor: pointer;
 }
 
+.img-div {
+  background-color: rgba(0,0,0,0.6);
+  min-height: 670px;
+  max-height: 670px;
+}
+
 .movie-close-btn:active {
   color: #9A9A9A;
   transform : rotateX(90deg);
-}
-
-.movie-detail-title {
-  
 }
 
 .detail-description {
@@ -162,8 +204,38 @@ h1 { color: red; }
   margin: 0 4px;
 }
 
-.movie-detail-pics {
-  width: auto;
-  height: auto;
-  max-height: 500px;
+.bottom-menu {
+  background-color: #080808;
+  padding-top: 2rem;
+}
+
+.bottom-menu > span {
+  margin-top: 1rem;
+  font-size: 1.6rem;
+  color: rgba(255,255,255,0.6);
+  margin-left: 2rem;
+  margin-right: 2rem;
+  display: inline-block;
+}
+
+.bottom-menu > span:hover {
+  border-bottom: 3px solid rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+}
+
+.menu-click {
+  color: white !important;
+}
+.menu-click:hover {
+  border-bottom: 3px solid white;
+}
+
+.blur-image {
+  filter: blur(6px);
+}
+
+.footer {
+  display: absolute;
+  bottom: 0;
+  left: 0;
 }

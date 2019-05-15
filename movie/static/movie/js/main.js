@@ -2,19 +2,43 @@ const API_URL = 'http://127.0.0.1:8000';
 
 Vue.component('show-more', {
   props:['movie', 'show'],
+  data: function(){
+    return {
+      basic: true,
+      detail: false,
+      recommend: false
+    }
+  },
   methods: {
     handleClose: function(){
+      console.log('start')
+      app.show = false;
       show = false;
       console.log(show)
+    },
+    activeBasic: function(){
+      this.basic = true
+      this.detail = false
+      this.recommend = false
+    },
+    activeDetail: function(){
+      this.basic = false
+      this.detail = true
+      this.recommend = false
+    },
+    activeRecommend: function(){
+      this.basic = false
+      this.detail = false
+      this.recommend = true
     }
   },
   template: `
-  <div class="show-more-see">
+  <div class="show-more-see mx-0">
     <div>
       <div class="row">
-        <div class="col-4">
-          <h1 class="movie-main-title">{{movie.title}}</h1>
-          <div class="movie-sub-title">
+        <div class="col-4 movie-spec-info">
+          <h1 class="movie-main-title ml-5 mt-5">{{movie.title}}</h1>
+          <div class="movie-sub-title ml-5">
             <p>
               <span class="sub-box-name">개봉년도</span>
               <span class="sub-box-value">{{movie.pubDate}}</span>
@@ -24,18 +48,23 @@ Vue.component('show-more', {
               <span class="sub-box-value">{{movie.userRating}}</span>
             </p>
           </div>
-          <div class="mt-4 ml-5 movie-detail-title">
+          <div v-show="basic" class="mt-4 ml-5 movie-detail-title">
             <p class="detail-description">{{ movie.description }}</p>
             <p>
               <span class="detail detail-subtitle">개요</span>
               <span class="detail detail-subtext" v-for="genre in movie.genres">{{ genre.name }}</span>
-            </p>
+            </p> 
           </div>
         </div>
-        <div class="col-8 d-flex justify-content-end">
-          <img class="movie-detail-pics" :src="'https://image.tmdb.org/t/p/w500'+movie.image" />
-          <span class="movie-close-btn mt-n3 mr-5" @click="handleClose()">&times;</span>
+        <div class="img-div col-8 d-flex justify-content-end" :class="{'blur-image': !basic}" :style="{'background-image': 'url(https://image.tmdb.org/t/p/original'+movie.backdrop+')', 'background-size': 'cover',
+          'background-color':'rgba(0,0,0,0.6)' }">
+          <span @click="handleClose" class="movie-close-btn mt-n3 mr-5">&times;</span>
         </div>
+      </div>
+      <div class="row d-flex justify-content-center bottom-menu" v-show="show">
+        <span @click="activeBasic" :class="{'menu-click': basic}">기본정보</span>
+        <span @click="activeDetail" :class="{'menu-click': detail}">상세정보</span>
+        <span @click="activeRecommend" :class="{ 'menu-click': recommend }">비슷한 작품</span>
       </div>
     </div>
   </div>
