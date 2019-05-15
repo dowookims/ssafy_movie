@@ -3,17 +3,17 @@
 {% block body %}
 <div id="app">
   <h1>Hello World!</h1>
-  <i @click="prevPage"class="fas fa-chevron-left arrow left-arrow"></i>
+  <i @click="prevPage" class="fas fa-chevron-left arrow left-arrow"></i>
   <div :style="{'margin-left': page +'%'}"class="movie-container">
-    <div class="items d-flex align-items-end" v-for="movie in movies" :style="{'background': 'url(https://image.tmdb.org/t/p/w500'+movie.backdrop+')'}">
-      
+    <div class="items d-flex align-items-end" v-for="movie in movies" :style="{'background': 'url(https://image.tmdb.org/t/p/w500'+movie.backdrop+')'}"> 
       <div class="item-bottom">
         <span class="movie-small-name">[[ movie.title ]]</span>
-        <button class="btn btn-primary py-1 show-more" @click="showMore(movie)">더보기</button>
+        <i class="fas fa-chevron-down show-more mb-2" @click="showMore(movie)"></i>
       </div>
     </div>
+    <i @click="nextPage"class="fas fa-chevron-right arrow right-arrow"></i>
   </div>
-  <i @click="nextPage"class="fas fa-chevron-right arrow right-arrow"></i>
+  
   <show-more :class=`show-more-see` v-show="show" :movie="showmovie" v-model="show" show="show"></show-more>
 </div>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
