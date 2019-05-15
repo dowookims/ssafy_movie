@@ -63,7 +63,7 @@ Vue.component('show-more', {
           <div class="img-div" :class="{'blur-image': !basic}" :style="{'background-image': 'url(https://image.tmdb.org/t/p/original'+movie.backdrop+')', 'background-size': 'cover',
           }">
           </div>
-          <comments v-show="detail"></comments>
+            <comments v-if="detail" :id="movie.id"></comments>
           <div class="close-box">
             <span @click="handleClose" class="movie-close-btn mt-n3 mr-5">x</span>
           </div>
@@ -87,6 +87,7 @@ const app = new Vue({
         movies: [],
         show: false,
         showmovie: {
+            'id': 0,
             'title': '',
             'pubDate': '',
             'userRating': '',
@@ -115,7 +116,6 @@ const app = new Vue({
 
             if (this.show) {
                 this.showmovie = movie
-
             }
         },
         prevPage: function () {
