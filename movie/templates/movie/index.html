@@ -15,7 +15,7 @@
       <i @click="nextPage"class="fas fa-chevron-right arrow right-arrow"></i>
   </div>
   
-  <show-more :class=`show-more-see` v-show="show" :movie="showmovie" v-model="show" show="show"></show-more>
+  <show-more :rm="recommendMovies":class=`show-more-see` v-show="show" :movie="showmovie" v-model="show" show="show"></show-more>
   </div>
   <div class="movie2">
     <i @click="prevPage2" class="fas fa-chevron-left arrow left-arrow2"></i>
@@ -35,7 +35,11 @@
 </div>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script type="text/javascript" src="{% static 'movie/js/recommend.js' %}"></script>
+
 <script type="text/javascript" src="{% static 'movie/js/comment.js' %}"></script>
+<script type="text/javascript" src="{% static 'movie/js/recommend.js' %}"></script>
 <script type="text/javascript" src="{% static 'movie/js/main.js' %}"></script>
+
+
+
 {% endblock %}

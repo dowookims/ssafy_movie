@@ -1,90 +1,100 @@
 const API_URL = 'http://127.0.0.1:8000';
 var API_KEY = '05559a3dcb74279f43087d2deb4ca13c';
 Vue.component('show-more', {
-    props: ['movie', 'show'],
-    data: function () {
-        return {
-            basic: true,
-            detail: false,
-            recommend: false,
-            recommendMovies: []
-        }
+  props: ['movie', 'show', 'rm'],
+  data: function () {
+    return {
+      basic: true,
+      detail: false,
+      recommend: false,
+      origin_url: "https://image.tmdb.org/t/p/original",
+      w500_url: "https://image.tmdb.org/t/p/w500",
+    }
+  },
+  methods: {
+    handleClose: function () {
+      app.show = false;
+      app.show2 = false;
     },
-    methods: {
-        handleClose: function () {
-            app.show = false;
-            app.show2 = false;
-        },
-        activeBasic: function () {
-            this.basic = true
-            this.detail = false
-            this.recommend = false
-        },
-        activeDetail: function () {
-            this.basic = false
-            this.detail = true
-            this.recommend = false
-        },
-        activeRecommend: function(movie_id) {
-            this.basic = false
-            this.detail = false
-            this.recommend = true
-            this.recommendMovie = []
-            axios.get(`https://api.themoviedb.org/3/movie/${movie_id}/similar?api_key=${API_KEY}&language=ko-KR`)
-            .then(res => {console.log(res.data.results); return res.data.results})
-            .then(data => {
-              data.forEach(movie => {
-                this.recommendMovies.push(movie)
-              })
-            })
-        },
+    activeBasic: function () {
+      this.basic = true
+      this.detail = false
+      this.recommend = false
     },
-    template: `
-  <div class="show-more-see mx-0">
-    <div>
-      <div class="row">
-        <div class="col-4 movie-spec-info">
-          <h1 class="movie-main-title ml-5 mt-5">{{movie.title}}</h1>
-          <div class="movie-sub-title ml-5">
-            <p>
-              <span class="sub-box-name">개봉년도</span>
-              <span class="sub-box-value">{{movie.pubDate}}</span>
-            </p>
-            <p>
-              <span class="sub-box-name">평점</span>
-              <span class="sub-box-value">{{movie.userRating}}</span>
-            </p>
+    activeDetail: function () {
+      this.basic = false
+      this.detail = true
+      this.recommend = false
+    },
+    activeRecommend: function(movie_id) {
+      this.basic = false
+      this.detail = false
+      this.recommendMovies = []
+      axios.get(`https://api.themoviedb.org/3/movie/${movie_id}/similar?api_key=${API_KEY}&language=ko-KR`)
+        .then(res => {console.log(res.data.results); return res.data.results})
+        .then(data => {
+          data.forEach(movie => {
+            this.recommendMovies.push(movie)
+          })
+        })
+      this.recommend = true
+    },
+  },
+  template: `
+    <div class="show-more-see mx-0">
+      <div>
+        <div class="row">
+          <div class="col-4 movie-spec-info">
+            <h1 class="movie-main-title ml-5 mt-5">{{movie.title}}</h1>
+            <div class="movie-sub-title ml-5">
+              <p>
+                <span class="sub-box-name">개봉년도</span>
+                <span class="sub-box-value">{{movie.pubDate}}</span>
+              </p>
+              <p>
+                <span class="sub-box-name">평점</span>
+                <span class="sub-box-value">{{movie.userRating}}</span>
+              </p>
+            </div>
+            <div v-show="basic" class="mt-4 ml-5 movie-detail-title">
+              <p class="detail-description">{{ movie.description }}</p>
+              <p>
+                <span class="detail detail-subtitle">개요</span>
+                <span class="detail detail-subtext" v-for="genre in movie.genres">{{ genre.name }}</span>
+              </p> 
+            </div>
           </div>
-          <div v-show="basic" class="mt-4 ml-5 movie-detail-title">
-            <p class="detail-description">{{ movie.description }}</p>
-            <p>
-              <span class="detail detail-subtitle">개요</span>
-              <span class="detail detail-subtext" v-for="genre in movie.genres">{{ genre.name }}</span>
-            </p> 
+          <div class="col-8 px-0">
+            <div class="img-div" 
+            :class="{'blur-image': !basic}" 
+            :style="{
+              'background-image': 'url(https://image.tmdb.org/t/p/original'+movie.backdrop+')', 
+              'background-size': 'cover'
+            }">
+            </div>
+            <comments v-show="detail"></comments>
+            <recommends v-show="recommend" :rcmv="rm"></recommends>
+            <div class="close-box">
+              <span @click="handleClose" class="movie-close-btn mt-n3 mr-5">&times;</span>
+            </div>
           </div>
         </div>
-        <div class="col-8 px-0">
-          <div class="img-div" :class="{'blur-image': !basic}" :style="{'background-image': 'url(https://image.tmdb.org/t/p/original'+movie.backdrop+')', 'background-size': 'cover',
-          }">
-          </div>
-          <comments v-show="detail"></comments>
-          <recommends 
-          :rcmv="recommendMovies" v-show="recommend"
-          ></recommends>
-          <div class="close-box">
-            <span @click="handleClose" class="movie-close-btn mt-n3 mr-5">&times;</span>
-          </div>
+        <div class="row d-flex justify-content-center bottom-menu" v-show="show">
+          <span 
+            @click="activeBasic" 
+            :class="{'menu-click': basic}"
+          >기본정보</span>
+          <span 
+            @click="activeDetail" 
+            :class="{'menu-click': detail}"
+          >상세정보</span>
+          <span 
+            @click="activeRecommend(movie.id)" 
+            :class="{ 'menu-click': recommend }"
+          >비슷한 작품</span>
         </div>
-
-      </div>
-      <div class="row d-flex justify-content-center bottom-menu" v-show="show">
-        <span @click="activeBasic" :class="{'menu-click': basic}">기본정보</span>
-        <span @click="activeDetail" :class="{'menu-click': detail}">상세정보</span>
-        <span @click="activeRecommend(movie.id)" :class="{ 'menu-click': recommend }">비슷한 작품</span>
       </div>
     </div>
-  </div>
-  
   `
 });
 // main app
@@ -93,9 +103,14 @@ const app = new Vue({
     data: {
         movies: [],
         movies2: [],
+        recommendMovies: [{
+          'title':'',
+          'backdrop_path':''
+        }],
         show: false,
         show2: false,
         showmovie: {
+            'id': 0,
             'title': '',
             'pubDate': '',
             'userRating': '',
@@ -137,11 +152,9 @@ const app = new Vue({
           } else if (this.showmovie.title === movie.title) {
               this.show = !this.show
           }
-
-          if (this.show) {
-              this.showmovie = movie
-
-          }
+            if (this.show) {
+                this.showmovie = movie
+            }
         },
         showMore2: function (movie) {
           this.show = false

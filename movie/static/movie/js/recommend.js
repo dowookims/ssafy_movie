@@ -6,6 +6,9 @@ Vue.component('recommends', {
       w500_url: "https://image.tmdb.org/t/p/w500",
     }
   },
+  mounted: function(){
+    this.mv = this.rcmv
+  },
 
   template: `
   <div class="recommend-list">

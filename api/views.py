@@ -22,7 +22,7 @@ class MovieList(generics.ListAPIView):
     queryset = Movie.objects.all()
 
 
-# TODO: make Comment Create, Read, Update, Delete
+# TODO: make Comment Update, Delete
 @api_view(['GET', 'POST'])
 def comment(request, movie_id):
     movie = get_object_or_404(Movie, pk=movie_id)
@@ -44,5 +44,4 @@ def login(request):
         'is_authenticated': request.user.is_authenticated
     })
 # TODO: make Score Create, Read, Update, Delete
-# TODO: make Movie Recommend using tmdb API and user like
 # TODO: make Movie Like
