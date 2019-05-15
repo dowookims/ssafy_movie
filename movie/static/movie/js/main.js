@@ -56,9 +56,13 @@ Vue.component('show-more', {
             </p> 
           </div>
         </div>
-        <div class="img-div col-8 d-flex justify-content-end" :class="{'blur-image': !basic}" :style="{'background-image': 'url(https://image.tmdb.org/t/p/original'+movie.backdrop+')', 'background-size': 'cover',
-          'background-color':'rgba(0,0,0,0.6)' }">
-          <span @click="handleClose" class="movie-close-btn mt-n3 mr-5">&times;</span>
+        <div class="col-8 px-0">
+          <div class="img-div" :class="{'blur-image': !basic}" :style="{'background-image': 'url(https://image.tmdb.org/t/p/original'+movie.backdrop+')', 'background-size': 'cover',
+          }">
+          </div>
+          <div class="close-box">
+            <span @click="handleClose" class="movie-close-btn mt-n3 mr-5">x</span>
+          </div>
         </div>
       </div>
       <div class="row d-flex justify-content-center bottom-menu" v-show="show">
