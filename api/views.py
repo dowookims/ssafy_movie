@@ -3,8 +3,10 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import generics
-from .serializers import MovieSerializer
-from movie.models import Movie
+from .serializers import MovieSerializer, CommentSerializer, CommentCreateSerializer
+from movie.models import Movie, Comment
+from django.contrib.auth import get_user_model
+
 # Create your views here.
 
 
@@ -21,6 +23,20 @@ class MovieList(generics.ListAPIView):
 
 
 # TODO: make Comment Create, Read, Update, Delete
+@api_view(['GET', 'POST'])
+def comment(request, movie_id):
+    movie = get_object_or_404(Movie, pk=movie_id)
+    if request.method == 'POST':
+        serializer = CommentCreateSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(movie_id=movie.id, user=request.user)
+            return Response(serializer.data)
+    else:
+        movie = get_object_or_404(Movie, pk=movie_id)
+        comments = Comment.objects.filter(movie_id=movie.id)
+        serializer = CommentSerializer(comments, many=True)
+        return Response(serializer.data)
+
 # TODO: make Score Create, Read, Update, Delete
 # TODO: make Movie Recommend using tmdb API and user like
 # TODO: make Movie Like
