@@ -35,16 +35,31 @@ body {
 .left-arrow {
   margin-top: auto;
   margin-bottom: auto;
-  top: 320px;
+  top: 80px;
   position: absolute;
 }
 
 .right-arrow {
   margin-top: auto;
   margin-bottom: auto;
-  top: 320px;
+  right: 0;
+  top: 80px;
+  position: absolute;
+}
+
+.left-arrow2 {
+  margin-top: auto;
+  margin-bottom: auto;
+  position: absolute;
+  top: 80px;
+}
+
+.right-arrow2 {
+  margin-top: auto;
+  margin-bottom: auto;
   right: 0;
   position: absolute;
+  top: 80px;
 }
 
 .login-text {
@@ -86,6 +101,7 @@ h1 {
   display: flex;
   padding: 0 4rem;
   opacity: 1;
+  position: relative;
 }
 
 .show-more {
@@ -140,12 +156,8 @@ h1 {
   margin-left: 4rem;
   transition: all .5s ease-in-out;
   height:0;
+  position: relative;
 }
-
-.show-more-see:target {
-  height: auto%;
-}
-
 
 .movie-sub-title {
   display: flex;
@@ -211,6 +223,11 @@ h1 {
   margin: 0 4px;
 }
 
+.detail-comment-box {
+  position: absolute;
+  top: 0;
+}
+
 .close-box {
   position: absolute;
   right:0;
@@ -251,4 +268,12 @@ h1 {
   display: absolute;
   bottom: 0;
   left: 0;
+}
+
+.movie1, .movie2 {
+  position: relative;
+}
+
+.showing {
+  margin-bottom: 830px;
 }

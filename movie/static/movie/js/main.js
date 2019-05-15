@@ -11,10 +11,8 @@ Vue.component('show-more', {
     },
     methods: {
         handleClose: function () {
-            console.log('start')
             app.show = false;
-            show = false;
-            console.log(show)
+            app.show2 = false;
         },
         activeBasic: function () {
             this.basic = true
@@ -63,11 +61,15 @@ Vue.component('show-more', {
           <div class="img-div" :class="{'blur-image': !basic}" :style="{'background-image': 'url(https://image.tmdb.org/t/p/original'+movie.backdrop+')', 'background-size': 'cover',
           }">
           </div>
+          <div v-show="detail" class="detail-comment-box">
+            sdfasdfdsfhjkhjkhsdfhsk
+            <comments v-show="detail"></comments>  
+          </div>
           <div class="close-box">
-            <span @click="handleClose" class="movie-close-btn mt-n3 mr-5">x</span>
+            <span @click="handleClose" class="movie-close-btn mt-n3 mr-5">&times;</span>
           </div>
         </div>
-        <comments v-show="detail"></comments>
+        
       </div>
       <div class="row d-flex justify-content-center bottom-menu" v-show="show">
         <span @click="activeBasic" :class="{'menu-click': basic}">기본정보</span>
@@ -83,9 +85,10 @@ Vue.component('show-more', {
 const app = new Vue({
     el: '#app',
     data: {
-        message: "Hello World!!!!",
         movies: [],
+        movies2: [],
         show: false,
+        show2: false,
         showmovie: {
             'title': '',
             'pubDate': '',
@@ -94,7 +97,16 @@ const app = new Vue({
             'description': '',
             'image': ''
         },
-        page: 0
+        showmovie2: {
+          'title': '',
+          'pubDate': '',
+          'userRating': '',
+          'genres': '',
+          'description': '',
+          'image': ''
+        },
+        page: 0,
+        page2: 0
     },
     delimiters: ['[[', ']]'],
     created: function () {
@@ -104,20 +116,40 @@ const app = new Vue({
                 console.log(data);
                 data.forEach(movie => this.movies.push(movie))
             })
+        axios.get(`${API_URL}/api/v1/movies/?page=2`)
+        .then(res => res.data.results)
+        .then(data => {
+            console.log(data);
+            data.forEach(movie => this.movies2.push(movie))
+        })
     },
     methods: {
         showMore: function (movie) {
-            if (!this.show) {
-                this.show = !this.show
-            } else if (this.showmovie.title === movie.title) {
-                this.show = !this.show
-            }
+          this.show2 = false
+          if (!this.show) {
+              this.show = !this.show
+          } else if (this.showmovie.title === movie.title) {
+              this.show = !this.show
+          }
 
-            if (this.show) {
-                this.showmovie = movie
+          if (this.show) {
+              this.showmovie = movie
 
-            }
+          }
         },
+        showMore2: function (movie) {
+          this.show = false
+          if (!this.show2) {
+              this.show2 = !this.show2
+          } else if (this.showmovie.title === movie.title) {
+              this.show2 = !this.show2
+          }
+
+          if (this.show2) {
+              this.showmovie = movie
+
+          }
+      },
         prevPage: function () {
             if (this.page == 0) {
                 this.page = -95
@@ -131,6 +163,20 @@ const app = new Vue({
             } else {
                 this.page -= 95
             }
-        }
+        },
+        prevPage2: function () {
+          if (this.page2 == 0) {
+              this.page2 = -95
+          } else {
+              this.page2 += 95
+          }
+      },
+      nextPage2: function () {
+          if (this.page2 == -95) {
+              this.page2 = 0
+          } else {
+              this.page2 -= 95
+          }
+      }
     }
 });

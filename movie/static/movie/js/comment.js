@@ -46,7 +46,7 @@ Vue.component('comments', {
                     });
                 this.newComment = '';
             }).catch(function (error) {
-                alert("´ñ±Û ÀÛ¼º¿¡ ½ÇÆÐÇß½À´Ï´Ù.")
+                alert("ï¿½ï¿½ï¿½ ï¿½Û¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½.")
             });
         }
     },
@@ -109,7 +109,7 @@ Vue.component('comments', {
 //                     });
 //                 this.newComment = '';
 //             }).catch(function (error) {
-//                 alert("´ñ±Û ÀÛ¼º¿¡ ½ÇÆÐÇß½À´Ï´Ù.")
+//                 alert("ï¿½ï¿½ï¿½ ï¿½Û¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½.")
 //             });
 //         }
 //     },
