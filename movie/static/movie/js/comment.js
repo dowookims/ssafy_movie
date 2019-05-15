@@ -1,6 +1,6 @@
 const API_URL = 'http://127.0.0.1:8000';
 // main app
-const app = new Vue({
+const app2 = new Vue({
   el: '#comment',
   data: {
     message: "Hello World!!!!",
