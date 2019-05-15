@@ -1,13 +1,15 @@
 Vue.component('comments', {
+    props: ['id'],
     data: function () {
         return {
+            // movie_id: this.movie,
             comments: [],
             newComment: '',
             isAuthenticated: false,
         }
     },
     mounted: function () {
-        axios.get(`${API_URL}/api/v1/movies/671/comments/`)
+        axios.get(`${API_URL}/api/v1/movies/${this.id}/comments/`)
             .then(res => res.data)
             .then(data => {
                 data.forEach(comment => this.comments.push(comment))

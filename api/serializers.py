@@ -22,7 +22,6 @@ class MovieSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-# TODO: make Comment serializer
 class CommentSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
 
