@@ -38,7 +38,7 @@ Vue.component('show-more', {
     template: `
   <div class="show-more-see mx-0">
     <div>
-      <div class="row" v-if="">
+      <div class="row">
         <div class="col-4 movie-spec-info">
           <h1 class="movie-main-title ml-5 mt-5">{{movie.title}}</h1>
           <div class="movie-sub-title ml-5">
@@ -63,11 +63,11 @@ Vue.component('show-more', {
           <div class="img-div" :class="{'blur-image': !basic}" :style="{'background-image': 'url(https://image.tmdb.org/t/p/original'+movie.backdrop+')', 'background-size': 'cover',
           }">
           </div>
+          <comments v-show="detail"></comments>
           <div class="close-box">
             <span @click="handleClose" class="movie-close-btn mt-n3 mr-5">x</span>
           </div>
         </div>
-        <comments v-show="detail"></comments>
       </div>
       <div class="row d-flex justify-content-center bottom-menu" v-show="show">
         <span @click="activeBasic" :class="{'menu-click': basic}">기본정보</span>

@@ -3,6 +3,7 @@ Vue.component('comments', {
         return {
             comments: [],
             newComment: '',
+            isAuthenticated: false,
         }
     },
     mounted: function () {
@@ -10,7 +11,12 @@ Vue.component('comments', {
             .then(res => res.data)
             .then(data => {
                 data.forEach(comment => this.comments.push(comment))
-            })
+            });
+        axios.get(`${API_URL}/api/v1/account/login/`)
+                .then(res => res.data)
+                .then(data => {
+                  this.isAuthenticated = data.is_authenticated
+                })
     },
     methods: {
         createComment: function () {
@@ -48,15 +54,16 @@ Vue.component('comments', {
             }).catch(function (error) {
                 alert("댓글 작성에 실패했습니다.")
             });
-        }
-    },
+        },
+    }
+    ,
     template: `
     <div id="comment">
         <div v-for="comment in comments">{{comment.user.username}} {{comment.content}}</div>
-            {% if user.is_authenticated %}
+            <div v-show="isAuthenticated">
                 <input type="text" class="form-control" v-model="newComment">
                 <button class="btn btn-dark" @click="createComment">enter</button>
-            {% endif %}
+            </div>
         </div>
     </div> 
     `
