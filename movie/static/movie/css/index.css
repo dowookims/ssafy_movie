@@ -138,7 +138,14 @@ h1 {
 .show-more-see {
   margin-top:80px;
   margin-left: 4rem;
+  transition: all .5s ease-in-out;
+  height:0;
 }
+
+.show-more-see:target {
+  height: auto%;
+}
+
 
 .movie-sub-title {
   display: flex;
@@ -202,6 +209,12 @@ h1 {
 
 .detail-subtext {
   margin: 0 4px;
+}
+
+.close-box {
+  position: absolute;
+  right:0;
+  top:0;
 }
 
 .bottom-menu {
