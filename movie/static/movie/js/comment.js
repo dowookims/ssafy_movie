@@ -6,6 +6,7 @@ Vue.component('comments', {
       comments: [],
       newComment: '',
       isAuthenticated: false,
+      mvDetail: {},
     }
   },
   mounted: function () {
@@ -20,10 +21,9 @@ Vue.component('comments', {
         this.isAuthenticated = data.is_authenticated
       });
     axios.get(`${API_URL}/api/v1/movies/${this.id}/detail/`)
-      .then(res => res.data)
-      .then(data => {
-        console.log(data)
-      });
+      .then(res => res.data[0])
+      .then(data => {console.log('data', data); this.mvDetail=data});
+      
     },
     methods: {
       createComment: function () {
@@ -66,6 +66,15 @@ Vue.component('comments', {
     ,
     template: `
     <div id="comment">
+      <div class="detail-content-box">
+        <p class="detail-content-title">배우</p>
+        <p class="detail-content-text">{{mvDetail.actor1}}</p>
+        <p class="detail-content-text">{{mvDetail.actor2}}</p>
+        <p class="detail-content-text">{{mvDetail.actor3}}</p>
+        <p class="detail-content-text">{{mvDetail.actor4}}</p>
+        <p class="detail-content-text">{{mvDetail.actor5}}</p>
+        <p class="detail-content-text">{{mvDetail.actor6}}</p>
+      </div>
       <div class="comment-box">
         <div v-for="comment in comments">{{comment.user.username}} {{comment.content}}
         </div>

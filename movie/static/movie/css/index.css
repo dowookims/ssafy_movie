@@ -291,6 +291,24 @@ h1 {
   margin: 1rem;
 }
 
+.detail-content-box {
+  position: absolute;
+  top: 250px;
+  left: -550px;
+}
+.detail-content-title {
+  font-size: 1.8rem;
+  margin-bottom: 0.6rem;
+  font-weight: 600;
+  color: white;
+  opacity: 1;
+  border-bottom: 4px solid white;
+}
+.detail-content-text {
+  font-size: 1.2rem;
+  margin-bottom: 0.4rem;
+}
+
 .comment-box {
   position: absolute;
   top: 0;
