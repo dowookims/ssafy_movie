@@ -3,10 +3,12 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import generics
-from .serializers import MovieSerializer, CommentSerializer, CommentCreateSerializer, CreditSerializer
-from movie.models import Movie, Comment, Credit
+from .serializers import MovieSerializer, CommentSerializer, CommentCreateSerializer, CreditSerializer, ScoreSerializer
+from movie.models import Movie, Comment, Credit, Score
 from django.contrib.auth import get_user_model
-
+from rest_framework.authtoken.models import Token
+from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Q
 # Create your views here.
 
 
@@ -55,8 +57,10 @@ def detail(request, movie_id):
 
 @api_view(['GET', 'POST'])
 def like_movie(request, movie_id):
+    print(request.user)
     if request.method=="POST":
         like=False
+        print(request)
         movie = get_object_or_404(Movie, pk=movie_id)
         if request.user in movie.like_users.all():
             movie.like_users.remove(request.user)
@@ -82,3 +86,32 @@ def comment_delete(request, movie_id, comment_id):
     comment.delete()
     data = True
     return Response({'data':data})
+    
+
+@api_view(['GET', 'POST'])
+def score(request, movie_id):
+    movie = get_object_or_404(Movie, pk=movie_id)
+    if request.method == 'POST':
+        serializer = ScoreSerializer(data=request.data)
+        try:
+            score = Score.objects.filter(movie_id=movie.id).filter(user=request.user)
+            score.update(star=request.data['star'])
+            return Response({
+                'star': request.data['star']
+            })
+        except ObjectDoesNotExist:
+            if serializer.is_valid(raise_exception=True):
+                serializer.save(movie_id=movie.id, user=request.user)
+                return Response(serializer.data)
+    else:
+        movie = get_object_or_404(Movie, pk=movie_id)
+        # try:
+        score, created = Score.objects.get_or_create(movie_id=movie.id, user=request.user)
+        if created:
+            score.star = 0
+        serializer = ScoreSerializer(score)
+        return Response(serializer.data)
+        # except ObjectDoesNotExist:
+        #     return Response({
+        #         'star': 0
+        #     })

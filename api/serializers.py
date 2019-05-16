@@ -1,4 +1,4 @@
-from movie.models import Movie, Genre, Comment, Credit
+from movie.models import Movie, Genre, Comment, Credit, Score
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 
@@ -43,3 +43,7 @@ class CreditSerializer(serializers.ModelSerializer):
         fields = "__all__"
 # TODO: make Score serializer
 
+class ScoreSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Score
+        fields = ['star']
