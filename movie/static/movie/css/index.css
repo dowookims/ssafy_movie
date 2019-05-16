@@ -274,11 +274,41 @@ h1 {
 
 .recommend-list {
   position: relative;
+  top: -480px;
+  left: -630px;
 }
 
 .recommend-mv-list {
   display: flex;
-  
+  margin-left: 2rem;
+}
+
+.rc-mv-item {
+  height: 12rem;
+  flex: 0 0 15%;
+  max-width: 400px !important;
+  text-align: center;
+  margin: 1rem;
+}
+
+.recMvImage {
+  max-width: 400px;
+  height: auto;
+}
+
+.rc-left-arrow {
+  position: relative;
+  top: 160px;
+}
+.rc-right-arrow {
+  position: absolute;
+  right: -600px;
+  top: 160px;
+}
+
+.comment-box {
+  position: absolute;
+  top: 0;
 }
 #footer.stikybottom {
     position: fixed;

@@ -1,6 +1,6 @@
 const API_URL = 'http://127.0.0.1:8000';
 var API_KEY = '05559a3dcb74279f43087d2deb4ca13c';
-Vue.component('show-more', {
+const app2 = Vue.component('show-more', {
   props: ['movie', 'show', 'rm'],
   data: function () {
     return {
@@ -15,6 +15,9 @@ Vue.component('show-more', {
     handleClose: function () {
       app.show = false;
       app.show2 = false;
+      this.basic= true;
+      this.detail= false;
+      this.recommend= false;
     },
     activeBasic: function () {
       this.basic = true
@@ -26,17 +29,9 @@ Vue.component('show-more', {
       this.detail = true
       this.recommend = false
     },
-    activeRecommend: function(movie_id) {
+    activeRecommend: function() {
       this.basic = false
       this.detail = false
-      this.recommendMovies = []
-      axios.get(`https://api.themoviedb.org/3/movie/${movie_id}/similar?api_key=${API_KEY}&language=ko-KR`)
-        .then(res => {console.log(res.data.results); return res.data.results})
-        .then(data => {
-          data.forEach(movie => {
-            this.recommendMovies.push(movie)
-          })
-        })
       this.recommend = true
     },
   },
@@ -73,7 +68,7 @@ Vue.component('show-more', {
             }">
             </div>
             <comments v-if="detail" :id="movie.id"></comments>
-            <recommends v-show="recommend" :rcmv="rm"></recommends>
+            <recommends v-if="recommend" :movieid="movie.id"></recommends>
             <div class="close-box">
               <span @click="handleClose" class="movie-close-btn mt-n3 mr-5">&times;</span>
             </div>
@@ -89,7 +84,7 @@ Vue.component('show-more', {
             :class="{'menu-click': detail}"
           >상세정보</span>
           <span 
-            @click="activeRecommend(movie.id)" 
+            @click="activeRecommend()" 
             :class="{ 'menu-click': recommend }"
           >비슷한 작품</span>
         </div>
