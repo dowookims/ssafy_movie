@@ -350,9 +350,13 @@ h1 {
   max-height: 670px;
 
 }
-/*.footer {*/
-/*    position: fixed;*/
-/*    bottom: 0;*/
-/*    width: 100%;*/
-/*    height: 100px;*/
-/*}*/
+#footer {
+    position: relative;
+    bottom: 0;
+    padding-top: 60px;
+}
+
+.footer-container{
+  padding-top:80px;
+  padding-bottom:100px;
+}
