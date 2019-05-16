@@ -8,15 +8,24 @@ Vue.component('recommends', {
       recommendMovies:[{
         title:'',
         backdrop_path:''
-      }]
+      }],
+      page: 0
     }
   },
   methods: {
     prevPage:function(){
-      console.log('work well left')
+      if(this.page===0){
+        this.page = -600
+      }else{
+      this.page += 120
+      }
     },
     nextPage: function(){
-      console.log('work well right')
+      if(this.page=== -600){
+        this.page =0
+      }else{
+      this.page -= 120
+      }
     }
 } ,
   mounted: function(){
@@ -35,8 +44,8 @@ Vue.component('recommends', {
 
   template: `
   <div class="recommend-list">
-  <i @click="prevPage" class="fas fa-chevron-left arrow left-arrow2"></i>
-    <div class="recommend-mv-list">
+    <i @click="prevPage" class="fas fa-chevron-left arrow rc-left-arrow"></i>
+    <div class="recommend-mv-list" :style="{'margin-left': page + '%'}">
       <div class="rc-mv-item" v-for="mv in recommendMovies">
         <div class="recMvImg">
           <img class="recMvImage":src="w500_url+mv.backdrop_path" />
@@ -45,8 +54,8 @@ Vue.component('recommends', {
         <p>{{mv.title}}</p>
         </div>
       </div>
-      <i @click="nextPage"class="fas fa-chevron-right arrow right-arrow2"></i>
     </div>
+    <i @click="nextPage"class="fas fa-chevron-right arrow rc-right-arrow"></i>  
   </div>
   `
 })

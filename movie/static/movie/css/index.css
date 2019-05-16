@@ -275,11 +275,12 @@ h1 {
 .recommend-list {
   position: relative;
   top: -480px;
-  left: -490px;
+  left: -630px;
 }
 
 .recommend-mv-list {
   display: flex;
+  margin-left: 2rem;
 }
 
 .rc-mv-item {
@@ -293,6 +294,16 @@ h1 {
 .recMvImage {
   max-width: 400px;
   height: auto;
+}
+
+.rc-left-arrow {
+  position: relative;
+  top: 160px;
+}
+.rc-right-arrow {
+  position: absolute;
+  right: -600px;
+  top: 160px;
 }
 /*.footer {*/
 /*    position: fixed;*/
