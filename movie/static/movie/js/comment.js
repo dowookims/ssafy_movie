@@ -86,10 +86,17 @@ Vue.component('comments', {
         <p class="detail-content-text">{{mvDetail.actor6}}</p>
       </div>
       <div class="comment-box">
-        <div v-for="comment in comments">{{comment.user.username}} {{comment.content}}
+        <div class="row comment-content-box">
+          <div class="col-6" v-for="comment in comments">
+            <div class="col-10 ml-4 pl-5 col-offset-1">
+              <p class="comment-user">
+              {{comment.user.username}}</p> 
+              <p class="comment-content">{{comment.content}}</p>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="comment-add-box" v-show="isAuthenticated">
+      <div class="comment-add-box d-flex justify-content-center" v-show="isAuthenticated">
             <input 
               type="text" 
               class="form-control" v-model="newComment" >

@@ -3,6 +3,7 @@
 {% block body %}
 <div id="app">
   <div class="movie1" :class="{'showing':show}">
+  <p class="movie-ment">저희만 추천합니다.</p>
     <i @click="prevPage" class="fas fa-chevron-left arrow left-arrow"></i>
     <div :style="{'margin-left': page +'%'}"class="movie-container">
       <div class="items d-flex align-items-end" v-for="movie in movies" :style="{'background': 'url(https://image.tmdb.org/t/p/w500'+movie.backdrop+')'}">
@@ -18,6 +19,7 @@
   <show-more :rm="recommendMovies":class=`show-more-see` v-if="show" :movie="showmovie" v-model="show" :show="show"></show-more>
   </div>
   <div class="movie2" :class="{'showing':show2}">
+    <p class="movie-ment">당신의 취향 고려하지 않습니다.</p>
     <i @click="prevPage2" class="fas fa-chevron-left arrow left-arrow2"></i>
     <div :style="{'margin-left': page2 +'%'}"class="movie-container">
       <div class="items d-flex align-items-end" v-for="movie in movies2" :style="{'background': 'url(https://image.tmdb.org/t/p/w500'+movie.backdrop+')'}">
