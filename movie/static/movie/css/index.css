@@ -310,9 +310,8 @@ h1 {
   position: absolute;
   top: 0;
 }
-#footer.stikybottom {
-    position: fixed;
-    bottom:0;
-    left: 0;
-    right:0;
+#footer {
+    position: relative;
+    bottom: 0;
+    padding-top: 60px;
 }

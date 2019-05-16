@@ -114,6 +114,7 @@ const app = new Vue({
             'image': ''
         },
         showmovie2: {
+          'id': 0,
           'title': '',
           'pubDate': '',
           'userRating': '',
@@ -194,11 +195,3 @@ const app = new Vue({
       }
     }
 });
-
-document.addEventListener("DOMContentLoaded", function (event) {
-    var element = document.getElementById('container');
-    var height = element.offsetHeight;
-    if (height < screen.height) {
-        document.getElementById("footer").classList.add('stikybottom');
-    }
-}, false);
