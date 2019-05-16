@@ -47,3 +47,14 @@ class Score(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
 
+
+class Credit(models.Model):
+    movie = models.OneToOneField(Movie, on_delete=models.CASCADE)
+    actor1 = models.CharField(max_length=30)
+    actor2 = models.CharField(max_length=30)
+    actor3 = models.CharField(max_length=30)
+    actor4 = models.CharField(max_length=30)
+    actor5 = models.CharField(max_length=30)
+    actor6 = models.CharField(max_length=30)
+    director = models.CharField(max_length=30)
+
