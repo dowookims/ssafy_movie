@@ -53,7 +53,7 @@ def detail(request, movie_id):
     return Response(serializer.data)
 
 
-@api_view(['GET'])
+@api_view(['POST'])
 def like_movie(request, movie_id):
     movie = get_object_or_404(Movie, pk=movie_id)
     if request.user in movie.like_users.all():
