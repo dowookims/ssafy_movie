@@ -15,8 +15,7 @@
       </div>
       <i @click="nextPage"class="fas fa-chevron-right arrow right-arrow"></i>
   </div>
-
-  <show-more :rm="recommendMovies":class=`show-more-see` v-if="show" :movie="showmovie" v-model="show" :show="show"></show-more>
+  <show-more :liked="liked" :rm="recommendMovies":class=`show-more-see` v-if="show" :movie="showmovie" v-model="show" :show="show"></show-more>
   </div>
   <div class="movie2" :class="{'showing':show2}">
     <p class="movie-ment">당신의 취향 고려하지 않습니다.</p>
@@ -32,7 +31,7 @@
       <i @click="nextPage2"class="fas fa-chevron-right arrow right-arrow2"></i>
     </div>
 
-    <show-more :rm="recommendMovies":class=`show-more-see` v-if="show2" :movie="showmovie" v-model="show2" :show="show2"></show-more>
+    <show-more :liked="liked" :rm="recommendMovies":class=`show-more-see` v-if="show2" :movie="showmovie" v-model="show2" :show="show2"></show-more>
   </div>
   <div class="god-hand">
   </div>

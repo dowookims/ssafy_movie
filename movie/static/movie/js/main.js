@@ -1,7 +1,7 @@
 const API_URL = 'http://127.0.0.1:8000';
 var API_KEY = '05559a3dcb74279f43087d2deb4ca13c';
 const app2 = Vue.component('show-more', {
-        props: ['movie', 'show', 'rm'],
+        props: ['movie', 'show', 'rm', 'liked'],
         data: function () {
             return {
                 basic: true,
@@ -10,15 +10,7 @@ const app2 = Vue.component('show-more', {
                 origin_url: "https://image.tmdb.org/t/p/original",
                 w500_url: "https://image.tmdb.org/t/p/w500",
                 csrftoken: '',
-                liked: false,
             }
-        },
-        mounted: function(){
-          axios.get(`${API_URL}/api/v1/movies/${this.movie.id}/like/`)
-          .then(res => res.data)
-          .then(data => {
-            this.liked = data.msg
-          })
         },
         methods: {
             handleClose: function () {
@@ -166,7 +158,8 @@ const app = new Vue({
             'image': ''
         },
         page: 0,
-        page2: 0
+        page2: 0,
+        liked: false,
     },
     delimiters: ['[[', ']]'],
     created: function () {
@@ -194,6 +187,11 @@ const app = new Vue({
             if (this.show) {
                 this.showmovie = movie
             }
+            axios.get(`${API_URL}/api/v1/movies/${movie.id}/like/`)
+              .then(res => res.data)
+              .then(data => {
+                this.liked = data.msg
+              })
         },
         showMore2: function (movie) {
             this.show = false
@@ -205,8 +203,13 @@ const app = new Vue({
 
             if (this.show2) {
                 this.showmovie = movie
-
             }
+
+            axios.get(`${API_URL}/api/v1/movies/${movie.id}/like/`)
+              .then(res => res.data)
+              .then(data => {
+                this.liked = data.msg
+              })
         },
         prevPage: function () {
             if (this.page == 0) {
