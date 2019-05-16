@@ -305,6 +305,11 @@ h1 {
   right: -600px;
   top: 160px;
 }
+
+.comment-box {
+  position: absolute;
+  top: 0;
+}
 /*.footer {*/
 /*    position: fixed;*/
 /*    bottom: 0;*/
