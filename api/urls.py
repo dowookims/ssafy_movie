@@ -9,4 +9,5 @@ urlpatterns = [
     # TODO: make Score API URL
     path('movies/<int:movie_id>/comments/', views.comment),
     path('account/login/', views.login),
+    path('movies/<int:movie_id>/detail/', views.detail),
 ]
