@@ -51,7 +51,7 @@ Vue.component('recommends', {
           <img class="recMvImage":src="w500_url+mv.backdrop_path" />
         </div>
         <div class="recMvSub">
-        <p>{{mv.title}}</p>
+        <p class="recMvText">{{mv.title}}</p>
         </div>
       </div>
     </div>

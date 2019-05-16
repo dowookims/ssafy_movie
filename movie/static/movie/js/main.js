@@ -38,7 +38,7 @@ const app2 = Vue.component('show-more', {
   template: `
     <div class="show-more-see mx-0">
       <div>
-        <div class="row">
+        <div class="row show-total-data">
           <div class="col-4 movie-spec-info">
             <h1 class="movie-main-title ml-5 mt-5">{{movie.title}}</h1>
             <div class="movie-sub-title ml-5">
@@ -59,7 +59,7 @@ const app2 = Vue.component('show-more', {
               </p> 
             </div>
           </div>
-          <div class="col-8 px-0">
+          <div class="col-8 px-0 movie-img-div">
             <div class="img-div" 
             :class="{'blur-image': !basic}" 
             :style="{
