@@ -18,7 +18,12 @@ Vue.component('comments', {
                 .then(res => res.data)
                 .then(data => {
                   this.isAuthenticated = data.is_authenticated
-                })
+                });
+                   axios.get(`${API_URL}/api/v1/movies/${this.id}/detail/`)
+                .then(res => res.data)
+                .then(data => {
+                    console.log(data)
+                });
     },
     methods: {
         createComment: function () {
@@ -39,7 +44,7 @@ Vue.component('comments', {
             }
 
             var csrftoken = getCookie('csrftoken');
-            axios.post(`${API_URL}/api/v1/movies/671/comments/`,
+            axios.post(`${API_URL}/api/v1/movies/${this.id}/comments/`,
                 {content: this.newComment},
                 {
                     headers: {
@@ -47,7 +52,7 @@ Vue.component('comments', {
                     }
                 }
             ).then(() => {
-                axios.get(`${API_URL}/api/v1/movies/671/comments/`)
+                axios.get(`${API_URL}/api/v1/movies/${this.id}/comments/`)
                     .then(res => res.data)
                     .then(data => {
                         this.comments.push(data[data.length - 1])
