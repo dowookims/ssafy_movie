@@ -70,7 +70,7 @@ Vue.component('comments', {
         <div v-for="comment in comments">{{comment.user.username}} {{comment.content}}
         </div>
       </div>
-      <div v-show="isAuthenticated">
+      <div class="comment-add-box" v-show="isAuthenticated">
             <input 
               type="text" 
               class="form-control" v-model="newComment" >

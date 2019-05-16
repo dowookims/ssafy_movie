@@ -291,6 +291,16 @@ h1 {
   margin: 1rem;
 }
 
+.comment-box {
+  position: absolute;
+  top: 0;
+ }
+
+.comment-add-box {
+  position: absolute;
+  top: 600px;
+}
+
 .recMvImage {
   max-width: 400px;
   height: auto;
@@ -304,6 +314,22 @@ h1 {
   position: absolute;
   right: -600px;
   top: 160px;
+}
+
+.recMvSub {
+  position: absolute;
+  top:250px;
+  margin-left:1.5rem;
+  width: 100%;
+  text-align: left;
+}
+
+.show-total-data {
+  max-height: 670px !important;
+}
+
+.movie-img-div {
+  max-height: 670px;
 }
 /*.footer {*/
 /*    position: fixed;*/
