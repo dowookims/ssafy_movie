@@ -34,6 +34,13 @@ const app2 = Vue.component('show-more', {
       this.detail = false
       this.recommend = true
     },
+    likeMovie: function () {
+      axios.get(`${API_URL}/api/v1/movies/${this.movie.id}/like/`)
+        .then(res => res.data)
+        .then(data => {
+          console.log(data)
+        });
+    }
   },
   template: `
     <div class="show-more-see mx-0">
@@ -75,6 +82,10 @@ const app2 = Vue.component('show-more', {
           </div>
         </div>
         <div class="row d-flex justify-content-center bottom-menu" v-show="show">
+          <span
+            @click="likeMovie">
+            좋아요
+          </span>
           <span 
             @click="activeBasic" 
             :class="{'menu-click': basic}"
