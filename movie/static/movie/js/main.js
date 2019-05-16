@@ -72,7 +72,7 @@ Vue.component('show-more', {
               'background-size': 'cover'
             }">
             </div>
-            <comments v-show="detail"></comments>
+            <comments v-if="detail" :id="movie.id"></comments>
             <recommends v-show="recommend" :rcmv="rm"></recommends>
             <div class="close-box">
               <span @click="handleClose" class="movie-close-btn mt-n3 mr-5">&times;</span>
@@ -199,3 +199,11 @@ const app = new Vue({
       }
     }
 });
+
+document.addEventListener("DOMContentLoaded", function (event) {
+    var element = document.getElementById('container');
+    var height = element.offsetHeight;
+    if (height < screen.height) {
+        document.getElementById("footer").classList.add('stikybottom');
+    }
+}, false);
