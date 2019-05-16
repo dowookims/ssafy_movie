@@ -53,16 +53,32 @@ def detail(request, movie_id):
     return Response(serializer.data)
 
 
-@api_view(['POST'])
+@api_view(['GET', 'POST'])
 def like_movie(request, movie_id):
-    movie = get_object_or_404(Movie, pk=movie_id)
-    if request.user in movie.like_users.all():
-        movie.like_users.remove(request.user)
-        return Response({'msg': f"{movie.title}를 {request.user.username}님이 좋아하지 않습니다."})
+    if request.method=="POST":
+        like=False
+        movie = get_object_or_404(Movie, pk=movie_id)
+        if request.user in movie.like_users.all():
+            movie.like_users.remove(request.user)
+        else:
+            movie.like_users.add(request.user)
+            like=True
+        return Response({'msg': like})
     else:
-        movie.like_users.add(request.user)
-        return Response({
-            'msg': f"{movie.title}를 {request.user.username}님이 좋아합니다"
-        })
+        like =False
+        movie = get_object_or_404(Movie, pk=movie_id)
+        if request.user in movie.like_users.all():
+            like =True
+        else:
+            like = False
+        return Response({'msg': like})
+
 # TODO: make Score Create, Read, Update, Delete
 # TODO: make Movie Like
+
+@api_view(['DELETE'])
+def comment_delete(request, movie_id, comment_id):
+    comment = get_object_or_404(Comment, pk=comment_id)
+    comment.delete()
+    data = True
+    return Response({'data':data})

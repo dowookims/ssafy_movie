@@ -8,13 +8,17 @@ Vue.component('comments', {
             isAuthenticated: false,
             mvDetail: {},
             csrfToken: '',
+            user:''
         }
     },
     mounted: function () {
+        console.log('commentIn', user)
         axios.get(`${API_URL}/api/v1/movies/${this.id}/comments/`)
             .then(res => res.data)
             .then(data => {
+                console.log(data)
                 data.forEach(comment => this.comments.push(comment))
+                this.user= user
             });
         axios.get(`${API_URL}/api/v1/account/login/`)
             .then(res => res.data)
@@ -49,6 +53,25 @@ Vue.component('comments', {
             }).catch(function (error) {
                 alert("댓글작성에 실패했습니다.")
             });
+        },
+        deleteComment: function(id){
+            this.csrftoken = this.getCookie('csrftoken');
+            axios.delete(`${API_URL}/api/v1/movies/${this.id}/comments/${id}/delete/`,
+                {headers: {
+                    'X-CSRFTOKEN': this.csrftoken,
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+                .then(res => {
+                    console.log(res)
+                    axios.get(`${API_URL}/api/v1/movies/${this.id}/comments/`)
+                    .then(res => {
+                        this.comments=[]; 
+                        return res.data})
+                    .then(data => {
+                        console.log(data)
+                        data.forEach(comment => this.comments.push(comment))
+                })})
         },
         getCookie: function (name) {
             var cookieValue = null;
@@ -96,7 +119,7 @@ Vue.component('comments', {
           <div class="col-6" v-for="comment in comments">
             <div class="col-10 ml-4 pl-5 col-offset-1">
               <p class="comment-user">
-              {{comment.user.username}}</p> 
+              <span>{{comment.user.username}}</span><span @click="deleteComment(comment.id)"class="comment-delete" v-if="user===comment.user.username">삭제</span></p> 
               <p class="comment-content">{{comment.content}}</p>
             </div>
           </div>
@@ -109,10 +132,6 @@ Vue.component('comments', {
             <button 
               class="btn btn-dark" @click="createComment">
               enter
-            </button>
-            <button
-              class="btn btn-dark" @click="likeMovie">
-              like
             </button>
           </div>
     </div> 

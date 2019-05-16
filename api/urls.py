@@ -11,4 +11,5 @@ urlpatterns = [
     path('account/login/', views.login),
     path('movies/<int:movie_id>/detail/', views.detail),
     path('movies/<int:movie_id>/like/', views.like_movie),
+    path('movies/<int:movie_id>/comments/<int:comment_id>/delete/', views.comment_delete),
 ]

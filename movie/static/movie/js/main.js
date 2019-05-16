@@ -10,7 +10,15 @@ const app2 = Vue.component('show-more', {
                 origin_url: "https://image.tmdb.org/t/p/original",
                 w500_url: "https://image.tmdb.org/t/p/w500",
                 csrftoken: '',
+                liked: false,
             }
+        },
+        mounted: function(){
+          axios.get(`${API_URL}/api/v1/movies/${this.movie.id}/like/`)
+          .then(res => res.data)
+          .then(data => {
+            this.liked = data.msg
+          })
         },
         methods: {
             handleClose: function () {
@@ -60,7 +68,7 @@ const app2 = Vue.component('show-more', {
                         }
                     }).then(res => res.data)
                     .then(data => {
-                        console.log(data)
+                        this.liked = !this.liked
                     })
             }
         },
@@ -79,6 +87,10 @@ const app2 = Vue.component('show-more', {
               <p>
                 <span class="sub-box-name">평점</span>
                 <span class="sub-box-value">{{movie.userRating}}</span>
+              </p>
+              <p>
+                <i v-show="!liked" class="far fa-heart like-heart" @click="likeMovie"></i>
+                <i v-show="liked" @click="likeMovie" class="fas fa-heart liked-heart like-heart"></i>
               </p>
             </div>
             <div v-show="basic" class="mt-4 ml-5 movie-detail-title">
@@ -105,10 +117,6 @@ const app2 = Vue.component('show-more', {
           </div>
         </div>
         <div class="row d-flex justify-content-center bottom-menu" v-show="show">
-          <span
-            @click="likeMovie">
-            좋아요
-          </span>
           <span 
             @click="activeBasic" 
             :class="{'menu-click': basic}"

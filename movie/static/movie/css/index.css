@@ -309,7 +309,7 @@ h1 {
 .detail-content-box {
   position: absolute;
   top: 250px;
-  left: -550px;
+  left: -490px;
 }
 .detail-content-title {
   font-size: 1.8rem;
@@ -383,6 +383,16 @@ h1 {
   overflow: hidden;
 }
 
+.comment-delete {
+  background-color: #FF0000;
+  color: #FFFFFF;
+  font-size : 1rem;
+  cursor: pointer;
+  margin-left: 1rem;
+  border-radius: 10px;
+  padding: 5px 16px;
+}
+
 .comment-user, .comment-content {
   font-size: 2rem;
 }
@@ -399,4 +409,13 @@ h1 {
 .comment-user {
   opacity: 0.6;
   margin-bottom: 0;
+}
+
+.like-heart {
+  font-size: 2rem;
+  margin-left: 1rem;
+}
+
+.liked-heart {
+  color: #FF0000;
 }

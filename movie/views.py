@@ -31,7 +31,7 @@ def comment_create(request, id):
 
 
 @login_required
-def comment_delete(request, comment_id):
+def comment_delete(request, movie_id, comment_id):
     comment = get_object_or_404(Comment, id=comment_id)
     if comment.user != request.user:
         return redirect('posts:index')
