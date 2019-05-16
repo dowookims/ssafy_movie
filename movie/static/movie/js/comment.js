@@ -66,11 +66,17 @@ Vue.component('comments', {
             return cookieValue;
         },
         likeMovie: function () {
-            axios.get(`${API_URL}/api/v1/movies/${this.id}/like/`)
-                .then(res => res.data)
+            this.csrftoken = this.getCookie('csrftoken');
+            axios.post(`${API_URL}/api/v1/movies/${this.id}/like/`,
+                {},
+                {
+                    headers: {
+                        'X-CSRFTOKEN': this.csrftoken,
+                    }
+                }).then(res => res.data)
                 .then(data => {
                     console.log(data)
-                });
+                })
         }
     }
     ,

@@ -1,48 +1,71 @@
 const API_URL = 'http://127.0.0.1:8000';
 var API_KEY = '05559a3dcb74279f43087d2deb4ca13c';
 const app2 = Vue.component('show-more', {
-  props: ['movie', 'show', 'rm'],
-  data: function () {
-    return {
-      basic: true,
-      detail: false,
-      recommend: false,
-      origin_url: "https://image.tmdb.org/t/p/original",
-      w500_url: "https://image.tmdb.org/t/p/w500",
-    }
-  },
-  methods: {
-    handleClose: function () {
-      app.show = false;
-      app.show2 = false;
-      this.basic= true;
-      this.detail= false;
-      this.recommend= false;
-    },
-    activeBasic: function () {
-      this.basic = true
-      this.detail = false
-      this.recommend = false
-    },
-    activeDetail: function () {
-      this.basic = false
-      this.detail = true
-      this.recommend = false
-    },
-    activeRecommend: function() {
-      this.basic = false
-      this.detail = false
-      this.recommend = true
-    },
-    likeMovie: function () {
-      axios.get(`${API_URL}/api/v1/movies/${this.movie.id}/like/`)
-        .then(res => res.data)
-        .then(data => {
-          console.log(data)
-        });
-    }
-  },
-  template: `
+        props: ['movie', 'show', 'rm'],
+        data: function () {
+            return {
+                basic: true,
+                detail: false,
+                recommend: false,
+                origin_url: "https://image.tmdb.org/t/p/original",
+                w500_url: "https://image.tmdb.org/t/p/w500",
+                csrftoken: '',
+            }
+        },
+        methods: {
+            handleClose: function () {
+                app.show = false;
+                app.show2 = false;
+                this.basic = true;
+                this.detail = false;
+                this.recommend = false;
+            },
+            activeBasic: function () {
+                this.basic = true
+                this.detail = false
+                this.recommend = false
+            },
+            activeDetail: function () {
+                this.basic = false
+                this.detail = true
+                this.recommend = false
+            },
+            activeRecommend: function () {
+                this.basic = false
+                this.detail = false
+                this.recommend = true
+            },
+            getCookie: function (name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = cookies[i].trim();
+                        // Does this cookie string begin with the name we want?
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            },
+            likeMovie: function () {
+                this.csrftoken = this.getCookie('csrftoken');
+                axios.post(`${API_URL}/api/v1/movies/${this.movie.id}/like/`,
+                    {},
+                    {
+                        headers: {
+                            'X-CSRFTOKEN': this.csrftoken,
+                        }
+                    }).then(res => res.data)
+                    .then(data => {
+                        console.log(data)
+                    })
+            }
+        },
+        template:
+            `
     <div class="show-more-see mx-0">
       <div>
         <div class="row show-total-data">
@@ -102,7 +125,8 @@ const app2 = Vue.component('show-more', {
       </div>
     </div>
   `
-});
+    })
+;
 // main app
 const app = new Vue({
     el: '#app',
@@ -110,8 +134,8 @@ const app = new Vue({
         movies: [],
         movies2: [],
         recommendMovies: [{
-          'title':'',
-          'backdrop_path':''
+            'title': '',
+            'backdrop_path': ''
         }],
         show: false,
         show2: false,
@@ -125,13 +149,13 @@ const app = new Vue({
             'image': ''
         },
         showmovie2: {
-          'id': 0,
-          'title': '',
-          'pubDate': '',
-          'userRating': '',
-          'genres': '',
-          'description': '',
-          'image': ''
+            'id': 0,
+            'title': '',
+            'pubDate': '',
+            'userRating': '',
+            'genres': '',
+            'description': '',
+            'image': ''
         },
         page: 0,
         page2: 0
@@ -145,37 +169,37 @@ const app = new Vue({
                 data.forEach(movie => this.movies.push(movie))
             })
         axios.get(`${API_URL}/api/v1/movies/?page=2`)
-        .then(res => res.data.results)
-        .then(data => {
-            console.log(data);
-            data.forEach(movie => this.movies2.push(movie))
-        })
+            .then(res => res.data.results)
+            .then(data => {
+                console.log(data);
+                data.forEach(movie => this.movies2.push(movie))
+            })
     },
     methods: {
         showMore: function (movie) {
-          this.show2 = false
-          if (!this.show) {
-              this.show = !this.show
-          } else if (this.showmovie.title === movie.title) {
-              this.show = !this.show
-          }
+            this.show2 = false
+            if (!this.show) {
+                this.show = !this.show
+            } else if (this.showmovie.title === movie.title) {
+                this.show = !this.show
+            }
             if (this.show) {
                 this.showmovie = movie
             }
         },
         showMore2: function (movie) {
-          this.show = false
-          if (!this.show2) {
-              this.show2 = !this.show2
-          } else if (this.showmovie.title === movie.title) {
-              this.show2 = !this.show2
-          }
+            this.show = false
+            if (!this.show2) {
+                this.show2 = !this.show2
+            } else if (this.showmovie.title === movie.title) {
+                this.show2 = !this.show2
+            }
 
-          if (this.show2) {
-              this.showmovie = movie
+            if (this.show2) {
+                this.showmovie = movie
 
-          }
-      },
+            }
+        },
         prevPage: function () {
             if (this.page == 0) {
                 this.page = -95
@@ -191,18 +215,18 @@ const app = new Vue({
             }
         },
         prevPage2: function () {
-          if (this.page2 == 0) {
-              this.page2 = -95
-          } else {
-              this.page2 += 95
-          }
-      },
-      nextPage2: function () {
-          if (this.page2 == -95) {
-              this.page2 = 0
-          } else {
-              this.page2 -= 95
-          }
-      }
+            if (this.page2 == 0) {
+                this.page2 = -95
+            } else {
+                this.page2 += 95
+            }
+        },
+        nextPage2: function () {
+            if (this.page2 == -95) {
+                this.page2 = 0
+            } else {
+                this.page2 -= 95
+            }
+        }
     }
 });

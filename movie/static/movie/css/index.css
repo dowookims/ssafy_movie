@@ -374,6 +374,7 @@ h1 {
 
 .footer-container{
   padding-top:80px;
+<<<<<<< HEAD
   padding-bottom:100px;
 }
 
@@ -394,4 +395,6 @@ h1 {
 .comment-user {
   opacity: 0.6;
   margin-bottom: 0;
+=======
+>>>>>>> 8149ed741706b702195e31828c3e157909a2f7e2
 }
