@@ -114,6 +114,7 @@ const app = new Vue({
             'image': ''
         },
         showmovie2: {
+          'id': 0,
           'title': '',
           'pubDate': '',
           'userRating': '',
