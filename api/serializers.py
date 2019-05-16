@@ -2,6 +2,7 @@ from movie.models import Movie, Genre, Comment, Credit
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 
+
 class GenreSerializer(serializers.ModelSerializer):
     class Meta:
         model = Genre

@@ -53,5 +53,16 @@ def detail(request, movie_id):
     return Response(serializer.data)
 
 
+@api_view(['GET'])
+def like_movie(request, movie_id):
+    movie = get_object_or_404(Movie, pk=movie_id)
+    if request.user in movie.like_users.all():
+        movie.like_users.remove(request.user)
+        return Response({'msg': f"{movie.title}를 {request.user.username}님이 좋아하지 않습니다."})
+    else:
+        movie.like_users.add(request.user)
+        return Response({
+            'msg': f"{movie.title}를 {request.user.username}님이 좋아합니다"
+        })
 # TODO: make Score Create, Read, Update, Delete
 # TODO: make Movie Like
