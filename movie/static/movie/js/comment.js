@@ -1,3 +1,4 @@
+Vue.component('star-rating', VueStarRating.default);
 Vue.component('comments', {
     props: ['id'],
     data: function () {
@@ -8,7 +9,8 @@ Vue.component('comments', {
             isAuthenticated: false,
             mvDetail: {},
             csrfToken: '',
-            user:''
+            user:'',
+            rating: 0,
         }
     },
     mounted: function () {
@@ -31,7 +33,12 @@ Vue.component('comments', {
                 console.log('data', data);
                 this.mvDetail = data
             });
-
+        axios.get(`${API_URL}/api/v1/movies/${this.id}/score/`)
+            .then(res => res.data)
+            .then(data => {
+                console.log(data)
+                this.rating = data.star / 2
+            })
     },
     methods: {
         createComment: function () {
@@ -101,8 +108,23 @@ Vue.component('comments', {
                     console.log(data)
                 })
         }
-    }
-    ,
+    },
+    watch: {
+        rating: function (val) {
+            this.csrftoken = this.getCookie('csrftoken');
+            axios.post(`${API_URL}/api/v1/movies/${this.id}/score/`,
+            {
+                'star': val * 2
+            },
+            {
+                headers: {
+                        'X-CSRFTOKEN': this.csrftoken,
+                }
+            }
+            ).then(res => res.data)
+             .then(data => console.log(data))
+        }
+    },
     template: `
     <div id="comment">
       <div class="detail-content-box">
@@ -113,8 +135,11 @@ Vue.component('comments', {
         <p class="detail-content-text">{{mvDetail.actor4}}</p>
         <p class="detail-content-text">{{mvDetail.actor5}}</p>
         <p class="detail-content-text">{{mvDetail.actor6}}</p>
+        <p class="detail-content-title">감독</p>
+        <p class="detail-content-text">{{mvDetail.director}}</p>
       </div>
       <div class="comment-box">
+         <star-rating :increment="0.5" v-model="rating"></star-rating>
         <div class="row comment-content-box">
           <div class="col-6" v-for="comment in comments">
             <div class="col-10 ml-4 pl-5 col-offset-1">
@@ -125,15 +150,15 @@ Vue.component('comments', {
           </div>
         </div>
       </div>
-      <div class="comment-add-box d-flex justify-content-center" v-show="isAuthenticated">
-            <input 
-              type="text" 
-              class="form-control" v-model="newComment" >
-            <button 
-              class="btn btn-dark" @click="createComment">
-              enter
-            </button>
-          </div>
+      <div class="comment-add-box d-flex justify-content-center">
+        <input 
+          type="text" 
+          class="form-control" v-model="newComment" v-show="isAuthenticated">
+        <button 
+          class="btn btn-dark" @click="createComment" v-show="isAuthenticated">
+          enter
+        </button>
+      </div>
     </div> 
     `
 });

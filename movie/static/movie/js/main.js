@@ -1,5 +1,9 @@
-const API_URL = 'http://127.0.0.1:8000';
+const API_URL = 'http://ssafy-movie-gstjs.c9users.io:8080';
 var API_KEY = '05559a3dcb74279f43087d2deb4ca13c';
+var csrf_token = document.getElementsByName("csrfmiddlewaretoken")[0].value;
+
+
+
 const app2 = Vue.component('show-more', {
         props: ['movie', 'show', 'rm', 'liked'],
         data: function () {
@@ -9,7 +13,6 @@ const app2 = Vue.component('show-more', {
                 recommend: false,
                 origin_url: "https://image.tmdb.org/t/p/original",
                 w500_url: "https://image.tmdb.org/t/p/w500",
-                csrftoken: '',
             }
         },
         methods: {
@@ -51,14 +54,15 @@ const app2 = Vue.component('show-more', {
                 return cookieValue;
             },
             likeMovie: function () {
-                this.csrftoken = this.getCookie('csrftoken');
-                axios.post(`${API_URL}/api/v1/movies/${this.movie.id}/like/`,
-                    {},
-                    {
-                        headers: {
-                            'X-CSRFTOKEN': this.csrftoken,
-                        }
-                    }).then(res => res.data)
+                const token = jQuery("[name=csrfmiddlewaretoken]").val();
+                console.log(token)
+                token2 = Cookies.get('csrftoken')
+                console.log(token2)
+                const payload = {
+                  "X-CSRFTOKEN": token2,
+                }
+                
+                axios({ method: 'POST', url: `${API_URL}/api/v1/movies/${this.movie.id}/like/`, headers: payload, data: {} }).then(res => res.data)
                     .then(data => {
                         this.liked = !this.liked
                     })
@@ -192,6 +196,7 @@ const app = new Vue({
               .then(data => {
                 this.liked = data.msg
               })
+
         },
         showMore2: function (movie) {
             this.show = false

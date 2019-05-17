@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block body %}
+{% csrf_token %}
 <div id="app">
   <div class="movie1" :class="{'showing':show}">
   <p class="movie-ment">저희만 추천합니다.</p>
@@ -42,14 +43,16 @@
   {% if user.is_authenticated %}
     user = '{{ user }}'
   {% endif %}
+  
 </script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+<script src="https://unpkg.com/vue-star-rating/dist/star-rating.min.js"></script>
 
 <script type="text/javascript" src="{% static 'movie/js/comment.js' %}"></script>
 <script type="text/javascript" src="{% static 'movie/js/recommend.js' %}"></script>
 <script type="text/javascript" src="{% static 'movie/js/main.js' %}"></script>
-
 
 
 {% endblock %}

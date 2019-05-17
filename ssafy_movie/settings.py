@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'movie',
     'account',
     'rest_framework',
+    'rest_framework.authtoken',
     'rest_framework_swagger',
     'corsheaders',
     'bootstrap4',
@@ -83,6 +84,10 @@ WSGI_APPLICATION = 'ssafy_movie.wsgi.application'
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.AllowAny',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     )
 }
 # Database
