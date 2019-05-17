@@ -90,7 +90,7 @@ const app2 = Vue.component('show-more', {
               <p>
                 <span class="detail detail-subtitle">개요</span>
                 <span class="detail detail-subtext" v-for="genre in movie.genres">{{ genre.name }}</span>
-              </p> 
+              </p>
             </div>
           </div>
           <div class="col-8 px-0 movie-img-div">
